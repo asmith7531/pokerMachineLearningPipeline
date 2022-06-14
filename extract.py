@@ -16,22 +16,18 @@ def extract(tarFile, extract_path='.'):
             except:
                 pass
 
-
-dirs = "IRCdata"
-
-
-def removeNoneHoldemTars() -> None:
-    files = []
-    try:
-        for (files) in walk("IRCdata"):
-            break
-        for tars in files:
-            if "holdem" or "nolimit" not in files:
-                shutil.rmtree(os.path.join(dirs, files))
-    except:
-        pass
-
+def removeOtherFiles() -> None:
+    dir = "IRCdata"
+    for f in os.listdir(dir):
+        print(f)
+        try:
+            """We can just remove all the remaining files in the directory, because remove will not impact our newly extracted directories"""
+            os.remove(os.path.join(dir, f))
+        except:
+            pass
 
 extract("IRCdata.tgz")
 removeNoneHoldemTars()
+removeOtherFiles()
+
 
