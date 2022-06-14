@@ -1,8 +1,6 @@
 import os
-import sys
 import tarfile
 import shutil
-from os import path
 from os import walk
 
 
@@ -19,30 +17,21 @@ def extract(tarFile, extract_path='.'):
                 pass
 
 
-dir = "IRCdata"
+dirs = "IRCdata"
 
 
 def removeNoneHoldemTars() -> None:
-    directories = []
-    for (dirnames) in walk("IRCdata"):
-        directories = dirnames
-        break
-    directories = directories[1]
-    for dir in directories:
-        if "holdem" not in dir:
-            path = dir + "/" + str(dir)
-            shutil.rmtree(path)
-
-
-def removeOtherFiles() -> None:
-    for f in os.listdir(dir):
-        try:
-            os.remove(os.path.join(dir, f))
-        except:
-            pass
+    files = []
+    try:
+        for (files) in walk("IRCdata"):
+            break
+        for tars in files:
+            if "holdem" or "nolimit" not in files:
+                shutil.rmtree(os.path.join(dirs, files))
+    except:
+        pass
 
 
 extract("IRCdata.tgz")
-removeNoneHoldemDirs()
-removeOtherFiles()
+removeNoneHoldemTars()
 
